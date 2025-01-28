@@ -7,8 +7,8 @@ public class JpaStarterRead {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myApp");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        AccessCard card = entityManager.find(AccessCard.class, 3);
-        System.out.println(card.getOwner());
+        Employee employee = entityManager.find(Employee.class, 1);
+        System.out.println(employee.getPayStub());
 
     }
 }

@@ -3,6 +3,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.Date;
+import java.util.List;
 
 public class JpaStarterWrite {
     public static void main(String[] args) {
@@ -47,6 +48,36 @@ public class JpaStarterWrite {
          employee2.setCard(card2);
 
 
+         PayStub payStub1 = new PayStub();
+         payStub1.setPayPeriodStart(new Date());
+         payStub1.setPayPeriodEnd(new Date());
+         payStub1.setEmployee(employee1);
+         payStub1.setSalary(1000);
+
+
+         PayStub payStub2 = new PayStub();
+         payStub2.setPayPeriodStart(new Date());
+         payStub2.setPayPeriodEnd(new Date());
+         payStub2.setEmployee(employee1);
+         payStub2.setSalary(2000);
+
+          employee1.setPayStub(List.of(payStub1, payStub2));
+
+          EmailGroup group1 = new EmailGroup();
+          group1.setName("Company Watercooler discussions ");
+          group1.addMember(employee1);
+          group1.addMember(employee2);
+          employee2.addEmailSubscription(group1);
+          employee1.addEmailSubscription(group1);
+
+
+
+          EmailGroup group2 = new EmailGroup();
+          group2.setName("Engineering");
+          employee1.addEmailSubscription(group2);
+          group2.addMember(employee1);
+
+
 
 
          EntityTransaction transaction = entityManager.getTransaction();
@@ -54,8 +85,18 @@ public class JpaStarterWrite {
 
          entityManager.persist(employee1);
          entityManager.persist(employee2);
+
+
          entityManager.persist(card1);
          entityManager.persist(card2);
+
+
+         entityManager.persist(payStub1);
+         entityManager.persist(payStub2);
+
+         entityManager.persist(group1);
+         entityManager.persist(group2);
+
 
          transaction.commit();
          entityManager.close();

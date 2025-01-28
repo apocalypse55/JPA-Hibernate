@@ -1,5 +1,7 @@
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "EMPLOYEE_DATA")
@@ -27,6 +29,14 @@ public class Employee {
 
     @OneToOne
     private AccessCard card;
+
+    @OneToMany(mappedBy = "employee")
+    private List<PayStub> payStub = new ArrayList<>();
+
+    @ManyToMany
+    private List<EmailGroup> emailGroups = new ArrayList<>();
+
+
 
     public AccessCard getCard() {
         return card;
@@ -86,6 +96,25 @@ public class Employee {
 
     public void setType(EmployeeType type) {
         this.type = type;
+    }
+
+    public List<PayStub> getPayStub() {
+        return payStub;
+    }
+
+    public void setPayStub(List<PayStub> payStub) {
+        this.payStub = payStub;
+    }
+
+    public List<EmailGroup> getEmailGroups() {
+        return emailGroups;
+    }
+
+    public void setEmailGroups(List<EmailGroup> emailGroups) {
+        this.emailGroups = emailGroups;
+    }
+    public void addEmailSubscription(EmailGroup group){
+        this.emailGroups.add(group);
     }
 
     @Override
